@@ -8,6 +8,7 @@
 #include <array>
 #include <cmath>
 #include <ctime>
+#include <chrono>
 
 namespace BITBankFinalProject {
 
@@ -53,6 +54,8 @@ namespace BITBankFinalProject {
 	private: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::TextBox^  textBox2;
 	private: System::Windows::Forms::TextBox^  textBox3;
+	private: System::Windows::Forms::DateTimePicker^  dateTimePicker1;
+
 
 
 
@@ -83,6 +86,7 @@ namespace BITBankFinalProject {
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -204,6 +208,7 @@ namespace BITBankFinalProject {
 			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox1->Size = System::Drawing::Size(449, 201);
 			this->textBox1->TabIndex = 7;
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &mainInterface::textBox1_TextChanged);
 			// 
 			// textBox2
 			// 
@@ -215,6 +220,7 @@ namespace BITBankFinalProject {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(449, 20);
 			this->textBox2->TabIndex = 8;
+			this->textBox2->TextChanged += gcnew System::EventHandler(this, &mainInterface::textBox2_TextChanged);
 			// 
 			// textBox3
 			// 
@@ -230,11 +236,19 @@ namespace BITBankFinalProject {
 			this->textBox3->Text = L"Ready. Type commands in the box below or click a button.";
 			this->textBox3->TextChanged += gcnew System::EventHandler(this, &mainInterface::textBox3_TextChanged);
 			// 
+			// dateTimePicker1
+			// 
+			this->dateTimePicker1->Location = System::Drawing::Point(137, 435);
+			this->dateTimePicker1->Name = L"dateTimePicker1";
+			this->dateTimePicker1->Size = System::Drawing::Size(200, 20);
+			this->dateTimePicker1->TabIndex = 10;
+			// 
 			// mainInterface
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(473, 800);
+			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
@@ -268,19 +282,44 @@ namespace BITBankFinalProject {
 		// convert now to string form
 		char* dt = ctime(&now);
 
-		std::cout << "The local date and time is: " << dt << std::endl;
+		//time_t rawtime;
+		//struct tm * timeinfo;
+		//char buffer[80];
+
+		//time(&rawtime);
+		//timeinfo = localtime(&rawtime);
+
+		//strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+		//std::string str(buffer);
+
+		//std::cout << str;
+
+		textBox1->Text = "\nThe local (desktop) date and time is: ";
+		textBox1->AppendText(Convert::ToString(dt));
+		std::cout << "local time: "<< dt;
 
 		// convert now to tm struct for UTC
-		tm *gmtm = gmtime(&now);
-		dt = asctime(gmtm);
-		std::cout << "The UTC date and time is:" << dt << std::endl;
+		//tm *gmtm = gmtime(&now);
+		//dt = asctime(gmtm);
+		//textBox1->Text = "The UTC date and time is: ";
+		//std::cout << "UTC time: "<< dt << std::endl;
 	}
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		printf("print help commands/functions\n");		//For debugging
+
+
 	}
 private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 
 private: System::Void textBox3_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void pictureBox2_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void textBox2_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void textBox1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

@@ -1,17 +1,9 @@
 ﻿  BITBank_Final_Project.cpp
-c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(269): warning C4996: 'ctime': This function or variable may be unsafe. Consider using ctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(283): warning C4996: 'ctime': This function or variable may be unsafe. Consider using ctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(476): note: see declaration of 'ctime'
-c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(274): warning C4996: 'gmtime': This function or variable may be unsafe. Consider using gmtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(496): note: see declaration of 'gmtime'
-c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(275): warning C4996: 'asctime': This function or variable may be unsafe. Consider using asctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(117): note: see declaration of 'asctime'
   mainInterface.cpp
-c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(269): warning C4996: 'ctime': This function or variable may be unsafe. Consider using ctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(283): warning C4996: 'ctime': This function or variable may be unsafe. Consider using ctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(476): note: see declaration of 'ctime'
-c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(274): warning C4996: 'gmtime': This function or variable may be unsafe. Consider using gmtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(496): note: see declaration of 'gmtime'
-c:\users\danny\onedrive\school\chapter 1 summer\intermediate programming\labs and assignments\final project\bitbank_final_project\bitbank_final_project\maininterface.h(275): warning C4996: 'asctime': This function or variable may be unsafe. Consider using asctime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(117): note: see declaration of 'asctime'
   Generating Code...
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   BITBank_Final_Project.vcxproj -> C:\Users\danny\OneDrive\School\Chapter 1 Summer\Intermediate Programming\Labs and Assignments\Final Project\BITBank_Final_Project\x64\Debug\BITBank_Final_Project.exe
