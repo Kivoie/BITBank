@@ -24,6 +24,12 @@
     <ClInclude Include="mainInterface.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="DBABash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LiterallyEverything.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -40,13 +46,15 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="mainInterface.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -37,11 +37,25 @@
 // 
 // 
 #include "stdafx.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string>
+#include <conio.h>
+#include <array>
+#include <cmath>
+#include <ctime>
+#include <chrono>
+#include <Windows.h>
+#include "DBABash.h"
 #include "mainInterface.h"
 
 using namespace System;
 using namespace BITBankFinalProject;
 
+
+[STAThreadAttribute]
 int main(array<System::String ^> ^args)
 {
 

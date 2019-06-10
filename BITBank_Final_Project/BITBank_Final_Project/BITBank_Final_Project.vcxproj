@@ -132,6 +132,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DBABash.h" />
+    <ClInclude Include="LiterallyEverything.h" />
     <ClInclude Include="mainInterface.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -144,7 +146,6 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BITBank_Final_Project.cpp" />
-    <ClCompile Include="mainInterface.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -1,0 +1,16 @@
+#pragma once
+#include "LiterallyEverything.h"
+
+using namespace System;
+using namespace BITBankFinalProject;
+
+// ___ _   _ _  _  ___ _____ ___ ___  _  _ ___ 
+//| __| | | | \| |/ __|_   _|_ _/ _ \| \| / __|
+//| _|| |_| | .` | (__  | |  | | (_) | .` \__ \
+//|_|  \___/|_|\_|\___| |_| |___\___/|_|\_|___/
+// ---------------------------------------------
+
+
+void timedate() {
+
+}

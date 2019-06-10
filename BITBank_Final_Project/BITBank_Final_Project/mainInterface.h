@@ -1,14 +1,12 @@
 ﻿#pragma once
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string>
-#include <conio.h>
-#include <array>
-#include <cmath>
-#include <ctime>
-#include <chrono>
+#include "LiterallyEverything.h"
+#define crlf textBox1->AppendText("\n");
+#define smallSplitter textBox1->AppendText("----------------------------------------------------------------------");
+#define largeSplitter textBox1->AppendText("======================================================================");
+
+double tbox;
+int tempValue;
+int test;
 
 namespace BITBankFinalProject {
 
@@ -28,9 +26,11 @@ namespace BITBankFinalProject {
 		mainInterface(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			
+			tbox = 0;
+			tempValue = 0;
+			test = 1;
+
 		}
 
 	protected:
@@ -208,6 +208,8 @@ namespace BITBankFinalProject {
 			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox1->Size = System::Drawing::Size(449, 201);
 			this->textBox1->TabIndex = 7;
+			this->textBox1->Text = L"Welcome to BITBank DBA 2019\r\nPress a button or enter in a command to begin. Type "
+				L"/help or click the Help button for help on commands and functions.\r\n";
 			this->textBox1->TextChanged += gcnew System::EventHandler(this, &mainInterface::textBox1_TextChanged);
 			// 
 			// textBox2
@@ -239,9 +241,12 @@ namespace BITBankFinalProject {
 			// dateTimePicker1
 			// 
 			this->dateTimePicker1->Location = System::Drawing::Point(137, 435);
+			this->dateTimePicker1->MaxDate = System::DateTime(2099, 12, 31, 0, 0, 0, 0);
+			this->dateTimePicker1->MinDate = System::DateTime(2000, 1, 1, 0, 0, 0, 0);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(200, 20);
+			this->dateTimePicker1->Size = System::Drawing::Size(197, 20);
 			this->dateTimePicker1->TabIndex = 10;
+			this->dateTimePicker1->Value = System::DateTime(2019, 6, 10, 0, 0, 0, 0);
 			// 
 			// mainInterface
 			// 
@@ -293,10 +298,10 @@ namespace BITBankFinalProject {
 		//std::string str(buffer);
 
 		//std::cout << str;
-
-		textBox1->Text = "\nThe local (desktop) date and time is: ";
-		textBox1->AppendText(Convert::ToString(dt));
-		std::cout << "local time: "<< dt;
+		smallSplitter crlf
+		textBox1->AppendText("Welcome to BITBank DBA 2019, press a button or enter in a command to begin. Type /help or click the Help button for help on commands and functions.");
+		crlf
+		std::cout << "[Button] "<< dt << "\b:  Home button"<< std::endl;
 
 		// convert now to tm struct for UTC
 		//tm *gmtm = gmtime(&now);
@@ -320,6 +325,12 @@ private: System::Void pictureBox2_Click(System::Object^  sender, System::EventAr
 private: System::Void textBox2_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void textBox1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+
+	
+	if (Int32::TryParse(textBox1->Text, tempValue)) {
+		tbox = float::Parse(textBox1->Text);
+	}
+
 }
 };
 }
