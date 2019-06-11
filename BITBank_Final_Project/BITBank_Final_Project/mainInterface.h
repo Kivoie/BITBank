@@ -1,12 +1,14 @@
 ﻿#pragma once
 #include "LiterallyEverything.h"
-#define crlf textBox1->AppendText("\n");
+#define crlf textBox1->AppendText("\r\n");
 #define smallSplitter textBox1->AppendText("----------------------------------------------------------------------");
 #define largeSplitter textBox1->AppendText("======================================================================");
 
 double tbox;
 int tempValue;
 int test;
+
+FILE *accounts;
 
 namespace BITBankFinalProject {
 
@@ -31,7 +33,23 @@ namespace BITBankFinalProject {
 			tempValue = 0;
 			test = 1;
 
+
+
 		}
+
+		//Function prototypes (for DBABash)
+		void accMain();
+		void accNew();
+		void accView();
+		void accEdit();
+		void accPass();
+		void accDelete();
+		void iSpendMain();
+		void marketMain();
+		void etransMain();
+		void helpMain();
+
+	private: bool submitClicked = false;
 
 	protected:
 		/// <summary>
@@ -55,6 +73,7 @@ namespace BITBankFinalProject {
 	private: System::Windows::Forms::TextBox^  textBox2;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::DateTimePicker^  dateTimePicker1;
+	private: System::Windows::Forms::Button^  button7;
 
 
 
@@ -87,6 +106,7 @@ namespace BITBankFinalProject {
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
+			this->button7 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -132,6 +152,7 @@ namespace BITBankFinalProject {
 			this->button2->Text = L"Accounts";
 			this->button2->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 			this->button2->UseVisualStyleBackColor = false;
+			this->button2->Click += gcnew System::EventHandler(this, &mainInterface::button2_Click);
 			// 
 			// button3
 			// 
@@ -209,7 +230,7 @@ namespace BITBankFinalProject {
 			this->textBox1->Size = System::Drawing::Size(449, 201);
 			this->textBox1->TabIndex = 7;
 			this->textBox1->Text = L"Welcome to BITBank DBA 2019\r\nPress a button or enter in a command to begin. Type "
-				L"/help or click the Help button for help on commands and functions.\r\n";
+				L"help or click the Help button for help on commands and functions.";
 			this->textBox1->TextChanged += gcnew System::EventHandler(this, &mainInterface::textBox1_TextChanged);
 			// 
 			// textBox2
@@ -220,7 +241,7 @@ namespace BITBankFinalProject {
 			this->textBox2->Location = System::Drawing::Point(12, 745);
 			this->textBox2->MaxLength = 100;
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(449, 20);
+			this->textBox2->Size = System::Drawing::Size(368, 20);
 			this->textBox2->TabIndex = 8;
 			this->textBox2->TextChanged += gcnew System::EventHandler(this, &mainInterface::textBox2_TextChanged);
 			// 
@@ -248,11 +269,23 @@ namespace BITBankFinalProject {
 			this->dateTimePicker1->TabIndex = 10;
 			this->dateTimePicker1->Value = System::DateTime(2019, 6, 10, 0, 0, 0, 0);
 			// 
+			// button7
+			// 
+			this->button7->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button7->Location = System::Drawing::Point(386, 742);
+			this->button7->Name = L"button7";
+			this->button7->Size = System::Drawing::Size(75, 23);
+			this->button7->TabIndex = 11;
+			this->button7->Text = L"Submit";
+			this->button7->UseVisualStyleBackColor = true;
+			this->button7->Click += gcnew System::EventHandler(this, &mainInterface::button7_Click);
+			// 
 			// mainInterface
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(473, 800);
+			this->Controls->Add(this->button7);
 			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
@@ -298,10 +331,7 @@ namespace BITBankFinalProject {
 		//std::string str(buffer);
 
 		//std::cout << str;
-		smallSplitter crlf
-		textBox1->AppendText("Welcome to BITBank DBA 2019, press a button or enter in a command to begin. Type /help or click the Help button for help on commands and functions.");
-		crlf
-		std::cout << "[Button] "<< dt << "\b:  Home button"<< std::endl;
+		textBox1->Text = ("Welcome to BITBank DBA 2019\r\nPress a button or enter in a command to begin. Type help or click the Help button for help on commands and functions.\r\n");
 
 		// convert now to tm struct for UTC
 		//tm *gmtm = gmtime(&now);
@@ -312,6 +342,15 @@ namespace BITBankFinalProject {
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		printf("print help commands/functions\n");		//For debugging
+		
+		textBox1->Text = ("BITBank DBA developed and designed by Danny Vuong.\r\n");
+		textBox1->AppendText("Student ID: 101040331\r\n");
+		textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
+		textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
+		textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");
+		textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED.NO PART O\
+F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
+PERMISSION IN WRITING FROM THE UNIVERSITY.\r\n");
 
 
 	}
@@ -332,5 +371,35 @@ private: System::Void textBox1_TextChanged(System::Object^  sender, System::Even
 	}
 
 }
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {	//
+
+	textBox1->Text = ("Account Management\r\n");
+	smallSplitter
+	textBox1->AppendText("\r\nWhat would you like to do?");
+
+	textBox1->AppendText("\r\n[acc New] \tMake a new account");
+	
+	textBox1->AppendText("\r\n[acc View] \tView account");
+	
+	textBox1->AppendText("\r\n[acc Edit] \tEdit account");
+	
+	textBox1->AppendText("\r\n[acc Pass] \tEdit password");
+	
+	textBox1->AppendText("\r\n[acc Delete] \tDelete account from database");
+
+
+	//stdio functions for file handling (i/o)
+	
+}
+private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {	//Submit button
+
+	//THE ORDER OF THESE FUNCTIONS MATTERS, DO NOT CHANGE THEIR ORDERS UNLESS YOU KNOW THIS
+	//PROJECT LIKE THE BACK OF YOUR HAND
+	submitClicked = true;
+	accMain();		//Account main loop
+
+}
+
+
 };
 }

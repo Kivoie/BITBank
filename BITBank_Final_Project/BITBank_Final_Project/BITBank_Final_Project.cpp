@@ -62,10 +62,23 @@ int main(array<System::String ^> ^args)
 	Application::EnableVisualStyles();		//Method for enabling the visual style library packages (C++)
 	Application::SetCompatibleTextRenderingDefault(false);	//Bool false to disable compatibility with text rendering
 
-	MessageBox::Show("Please make sure that you have .NET framework version 4.6.1 or later. Failure to do \
-so may result in undesirable artifacts.");	//Comment out this message box if you don't want the .NET message to keep appearing
+		//I HIGHLY RECOMMEND YOU DO NOT COMMENT THIS LINE OUT AS IT IS A LEGAL DISCLAIMER
+	System::Windows::Forms::DialogResult result = MessageBox::Show("PLEASE DO NOT USE \
+YOUR REAL BANK INFORMATION AS ALL INFORMATION IS STORED ON LOCAL PLAIN TEXT FILES FOR \
+EASE OF RETRIEVAL.\n\nBy clicking Yes you agree that all of the credentials and inform\
+ation created and managed by this program is solely your responsibility in the event t\
+hat any of the afore mentioned data is leaked or is stolen from an external source. Ot\
+herwise, click No to quit the program.", "BITBank Disclaimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information);
 
-	Application::Run(gcnew mainInterface());
+	if (System::Windows::Forms::DialogResult::Yes == result) {
+		Application::Run(gcnew mainInterface());
+	}
+	else {
+		return 0;
+	}
+
+
+	
 
     return 0;
 }

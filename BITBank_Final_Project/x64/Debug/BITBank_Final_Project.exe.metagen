@@ -17,3 +17,14 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class BITBankFinalProject.mainInterface: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    accMain(): PrivateScope, Public, HideBySig
+    accNew(): PrivateScope, Public, HideBySig
+    accView(): PrivateScope, Public, HideBySig
+    accEdit(): PrivateScope, Public, HideBySig
+    accPass(): PrivateScope, Public, HideBySig
+    accDelete(): PrivateScope, Public, HideBySig
+    iSpendMain(): PrivateScope, Public, HideBySig
+    marketMain(): PrivateScope, Public, HideBySig
+    etransMain(): PrivateScope, Public, HideBySig
+    helpMain(): PrivateScope, Public, HideBySig
