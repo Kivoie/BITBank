@@ -12,4 +12,4 @@ Basic Info
 _Please refer to cuLearn for more information about my project._
 
 
-#### **THIS REPOSITORY WILL BECOME PRIVATE STARTING JULY 6th 23:59.**
+#### **THIS REPOSITORY WILL BECOME PRIVATE STARTING SUNDAY JULY 14th 23:59 EST.**
