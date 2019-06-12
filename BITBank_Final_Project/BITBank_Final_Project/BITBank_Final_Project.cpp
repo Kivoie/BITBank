@@ -37,19 +37,7 @@
 // 
 // 
 #include "stdafx.h"
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string>
-#include <conio.h>
-#include <array>
-#include <cmath>
-#include <ctime>
-#include <chrono>
-#include <Windows.h>
-#include "DBABash.h"
-#include "mainInterface.h"
+#include "LiterallyEverything.h"
 
 using namespace System;
 using namespace BITBankFinalProject;
@@ -67,14 +55,16 @@ int main(array<System::String ^> ^args)
 YOUR REAL BANK INFORMATION AS ALL INFORMATION IS STORED ON LOCAL PLAIN TEXT FILES FOR \
 EASE OF RETRIEVAL.\n\nBy clicking Yes you agree that all of the credentials and inform\
 ation created and managed by this program is solely your responsibility in the event t\
-hat any of the afore mentioned data is leaked or is stolen from an external source. Ot\
-herwise, click No to quit the program.", "BITBank Disclaimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information);
+hat any of the afore mentioned data is leaked or is stolen from an external source. Yo\
+u also agree that BITBank SOFTWORKS LTD. is not liable for any damages caused onto you\
+ by the program. If you do not agree, click No to quit the program now.", "Legal Disclaimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information);
 
 	if (System::Windows::Forms::DialogResult::Yes == result) {
+		MessageBox::Show("If you have any text files open (accounts.txt, password.txt, fortune.txt, etc.) please close them now as the data will be unable to save by the program.", "Warning" ,MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		Application::Run(gcnew mainInterface());
 	}
 	else {
-		return 0;
+		Application::Exit();
 	}
 
 

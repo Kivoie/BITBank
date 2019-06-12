@@ -6,9 +6,12 @@
 
 double tbox;
 int tempValue;
-int test;
+char ch;
 
-FILE *accounts;
+FILE *accounts;	//Customer's account..........................[accounts.txt]
+FILE *password;	//Encrypted (basic encryption)................[password.txt]
+FILE *fortune;	//Home fortune................................[fortune.txt]
+FILE *temp;		//Temporary storate for password encryption...[temporary.txt]
 
 namespace BITBankFinalProject {
 
@@ -31,25 +34,36 @@ namespace BITBankFinalProject {
 			
 			tbox = 0;
 			tempValue = 0;
-			test = 1;
-
+			commandFlag = 0;
 
 
 		}
 
-		//Function prototypes (for DBABash)
-		void accMain();
-		void accNew();
-		void accView();
-		void accEdit();
-		void accPass();
-		void accDelete();
-		void iSpendMain();
-		void marketMain();
-		void etransMain();
-		void helpMain();
+	//Function prototypes (for DBABash.h)
+	private: void accMain();
+	private: void accNew();
+	private: void accView();
+	private: void accEdit();
+	private: void accPass();
+	private: void accDelete();
+	private: void iSpendMain();
+	private: void marketMain();
+	private: void etransMain();
+	private: void helpMain();
+
+	private: void flagnotfound();
+	private: System::Windows::Forms::Label^  label1;
 
 	private: bool submitClicked = false;
+	private: void textBox3_NeutralColor();
+	private: void textBox3_ErrorColor();
+	private: int commandFlag;
+			 // [1] = New Account
+			 // [2] = View Account
+			 // [3] = Edit Account
+			 // [4] = New/Change password
+			 // [5] = Delete Account
+			 // [6] = 
 
 	protected:
 		/// <summary>
@@ -107,6 +121,7 @@ namespace BITBankFinalProject {
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -247,9 +262,10 @@ namespace BITBankFinalProject {
 			// 
 			// textBox3
 			// 
-			this->textBox3->BackColor = System::Drawing::Color::White;
+			this->textBox3->BackColor = System::Drawing::Color::WhiteSmoke;
 			this->textBox3->Font = (gcnew System::Drawing::Font(L"Consolas", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->textBox3->ForeColor = System::Drawing::Color::Black;
 			this->textBox3->Location = System::Drawing::Point(63, 693);
 			this->textBox3->MaxLength = 50;
 			this->textBox3->Name = L"textBox3";
@@ -267,11 +283,12 @@ namespace BITBankFinalProject {
 			this->dateTimePicker1->Name = L"dateTimePicker1";
 			this->dateTimePicker1->Size = System::Drawing::Size(197, 20);
 			this->dateTimePicker1->TabIndex = 10;
-			this->dateTimePicker1->Value = System::DateTime(2019, 6, 10, 0, 0, 0, 0);
+			this->dateTimePicker1->Value = System::DateTime(2019, 6, 12, 0, 0, 0, 0);
+			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &mainInterface::dateTimePicker1_ValueChanged);
 			// 
 			// button7
 			// 
-			this->button7->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button7->Location = System::Drawing::Point(386, 742);
 			this->button7->Name = L"button7";
 			this->button7->Size = System::Drawing::Size(75, 23);
@@ -280,11 +297,24 @@ namespace BITBankFinalProject {
 			this->button7->UseVisualStyleBackColor = true;
 			this->button7->Click += gcnew System::EventHandler(this, &mainInterface::button7_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->label1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label1->Location = System::Drawing::Point(432, 785);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(41, 15);
+			this->label1->TabIndex = 12;
+			this->label1->Text = L"Credits";
+			this->label1->Click += gcnew System::EventHandler(this, &mainInterface::label1_Click);
+			// 
 			// mainInterface
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(473, 800);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->textBox3);
@@ -343,14 +373,7 @@ namespace BITBankFinalProject {
 
 		printf("print help commands/functions\n");		//For debugging
 		
-		textBox1->Text = ("BITBank DBA developed and designed by Danny Vuong.\r\n");
-		textBox1->AppendText("Student ID: 101040331\r\n");
-		textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
-		textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
-		textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");
-		textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED.NO PART O\
-F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
-PERMISSION IN WRITING FROM THE UNIVERSITY.\r\n");
+		
 
 
 	}
@@ -376,30 +399,53 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	textBox1->Text = ("Account Management\r\n");
 	smallSplitter
 	textBox1->AppendText("\r\nWhat would you like to do?");
-
 	textBox1->AppendText("\r\n[acc New] \tMake a new account");
-	
 	textBox1->AppendText("\r\n[acc View] \tView account");
-	
 	textBox1->AppendText("\r\n[acc Edit] \tEdit account");
-	
 	textBox1->AppendText("\r\n[acc Pass] \tEdit password");
-	
 	textBox1->AppendText("\r\n[acc Delete] \tDelete account from database");
 
 
-	//stdio functions for file handling (i/o)
+	
 	
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {	//Submit button
 
-	//THE ORDER OF THESE FUNCTIONS MATTERS, DO NOT CHANGE THEIR ORDERS UNLESS YOU KNOW THIS
-	//PROJECT LIKE THE BACK OF YOUR HAND
-	submitClicked = true;
-	accMain();		//Account main loop
+	textBox3_NeutralColor();
+
+	//The order matters, do not change order
+	if (submitClicked == false) {
+		accMain();		//Account main loop
+		iSpendMain();	//iSpend main loop
+		marketMain();	//market main loop
+		etransMain();	//etransfer main loop
+		helpMain();		//help main loop
+	}
+	else if (submitClicked == true) {
+
+		if (commandFlag = 1) {		// New account
+
+			accNew();
+			//submitClicked = true;
+		}
+	}
+	else {
+		flagnotfound();	//flag not found error box
+	}
 
 }
+private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-
+	textBox1->Text = "BITBank DBA developed and designed by Danny Vuong.\r\n";
+	textBox1->AppendText("Student ID: 101040331\r\n");
+	textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
+	textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
+	textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");
+	textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED. NO PART O\
+F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
+PERMISSION IN WRITING FROM THE UNIVERSITY.");
+}
+private: System::Void dateTimePicker1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+}
 };
 }
