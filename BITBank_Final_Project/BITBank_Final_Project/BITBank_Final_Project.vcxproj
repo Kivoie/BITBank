@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DBABash.h" />
+    <ClInclude Include="macrodefs.h" />
     <ClInclude Include="LiterallyEverything.h" />
     <ClInclude Include="mainInterface.h">
       <FileType>CppForm</FileType>

@@ -1,17 +1,16 @@
 ﻿#pragma once
 #include "LiterallyEverything.h"
-#define crlf textBox1->AppendText("\r\n");
-#define smallSplitter textBox1->AppendText("----------------------------------------------------------------------");
-#define largeSplitter textBox1->AppendText("======================================================================");
+#include "macrodefs.h"
 
 double tbox;
-int tempValue;
-char ch;
+int tempValue, status;
+char ch, accBuffer[16];
 
 FILE *accounts;	//Customer's account..........................[accounts.txt]
 FILE *password;	//Encrypted (basic encryption)................[password.txt]
 FILE *fortune;	//Home fortune................................[fortune.txt]
 FILE *temp;		//Temporary storate for password encryption...[temporary.txt]
+FILE *balance;	//For account balance in CAD..................[balance.txt]
 
 namespace BITBankFinalProject {
 
@@ -52,11 +51,21 @@ namespace BITBankFinalProject {
 	private: void helpMain();
 
 	private: void flagnotfound();
-	private: System::Windows::Forms::Label^  label1;
+	private: void helpDialogue();
+	private: void passwordNULLCheck();
+	private: void accountsNULLCheck();
+	private: void accountsThanos();
+	private: void passwordEncryption();
+	private: void accountsView();
+	private: System::Windows::Forms::Timer^  timer1;
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
+
 
 	private: bool submitClicked = false;
 	private: void textBox3_NeutralColor();
 	private: void textBox3_ErrorColor();
+	private: void textBox3_OKColor();
+	private: bool errorFlag;
 	private: int commandFlag;
 			 // [1] = New Account
 			 // [2] = View Account
@@ -64,6 +73,8 @@ namespace BITBankFinalProject {
 			 // [4] = New/Change password
 			 // [5] = Delete Account
 			 // [6] = 
+			 // [...]
+			 // [13] = Help
 
 	protected:
 		/// <summary>
@@ -88,7 +99,8 @@ namespace BITBankFinalProject {
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::DateTimePicker^  dateTimePicker1;
 	private: System::Windows::Forms::Button^  button7;
-
+	private: System::Windows::Forms::Label^  label1;
+	private: System::ComponentModel::IContainer^  components;
 
 
 
@@ -99,7 +111,7 @@ namespace BITBankFinalProject {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -108,6 +120,7 @@ namespace BITBankFinalProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(mainInterface::typeid));
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -122,7 +135,10 @@ namespace BITBankFinalProject {
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pictureBox1
@@ -270,6 +286,7 @@ namespace BITBankFinalProject {
 			this->textBox3->MaxLength = 50;
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->ReadOnly = true;
+			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
 			this->textBox3->Size = System::Drawing::Size(353, 20);
 			this->textBox3->TabIndex = 9;
 			this->textBox3->Text = L"Ready. Type commands in the box below or click a button.";
@@ -277,13 +294,16 @@ namespace BITBankFinalProject {
 			// 
 			// dateTimePicker1
 			// 
-			this->dateTimePicker1->Location = System::Drawing::Point(137, 435);
+			this->dateTimePicker1->Format = System::Windows::Forms::DateTimePickerFormat::Time;
+			this->dateTimePicker1->Location = System::Drawing::Point(12, 435);
 			this->dateTimePicker1->MaxDate = System::DateTime(2099, 12, 31, 0, 0, 0, 0);
 			this->dateTimePicker1->MinDate = System::DateTime(2000, 1, 1, 0, 0, 0, 0);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(197, 20);
+			this->dateTimePicker1->RightToLeft = System::Windows::Forms::RightToLeft::No;
+			this->dateTimePicker1->ShowUpDown = true;
+			this->dateTimePicker1->Size = System::Drawing::Size(86, 20);
 			this->dateTimePicker1->TabIndex = 10;
-			this->dateTimePicker1->Value = System::DateTime(2019, 6, 12, 0, 0, 0, 0);
+			this->dateTimePicker1->Value = System::DateTime(2019, 6, 13, 0, 0, 0, 0);
 			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &mainInterface::dateTimePicker1_ValueChanged);
 			// 
 			// button7
@@ -309,11 +329,28 @@ namespace BITBankFinalProject {
 			this->label1->Text = L"Credits";
 			this->label1->Click += gcnew System::EventHandler(this, &mainInterface::label1_Click);
 			// 
+			// timer1
+			// 
+			this->timer1->Enabled = true;
+			this->timer1->Interval = 50;
+			this->timer1->Tick += gcnew System::EventHandler(this, &mainInterface::timer1_Tick);
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(75, 436);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(22, 18);
+			this->pictureBox2->TabIndex = 13;
+			this->pictureBox2->TabStop = false;
+			this->pictureBox2->Click += gcnew System::EventHandler(this, &mainInterface::pictureBox2_Click_1);
+			// 
 			// mainInterface
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(473, 800);
+			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->dateTimePicker1);
@@ -335,6 +372,7 @@ namespace BITBankFinalProject {
 			this->Text = L"BITBank Desktop Banking Application 2019";
 			this->Load += gcnew System::EventHandler(this, &mainInterface::mainInterface_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -344,43 +382,31 @@ namespace BITBankFinalProject {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		// current date/time based on current system
-		time_t now = time(0);
-
-		// convert now to string form
-		char* dt = ctime(&now);
-
-		//time_t rawtime;
-		//struct tm * timeinfo;
-		//char buffer[80];
-
-		//time(&rawtime);
-		//timeinfo = localtime(&rawtime);
-
-		//strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
-		//std::string str(buffer);
-
-		//std::cout << str;
 		textBox1->Text = ("Welcome to BITBank DBA 2019\r\nPress a button or enter in a command to begin. Type help or click the Help button for help on commands and functions.\r\n");
 
-		// convert now to tm struct for UTC
-		//tm *gmtm = gmtime(&now);
-		//dt = asctime(gmtm);
-		//textBox1->Text = "The UTC date and time is: ";
-		//std::cout << "UTC time: "<< dt << std::endl;
 	}
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		printf("print help commands/functions\n");		//For debugging
-		
-		
-
+		//printf("print help commands/functions\n");		//For debugging
+		helpDialogue();
 
 	}
 private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 
 private: System::Void textBox3_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+
+private: System::Void dateTimePicker1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+
+
+}
+private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
+
+	dateTimePicker1->Value = System::DateTime::Now;		//Timer that keeps incrementing at 1000 milliseconds to emulate time
+
+}
+private: System::Void pictureBox2_Click_1(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void pictureBox2_Click(System::Object^  sender, System::EventArgs^  e) {
 }
@@ -423,10 +449,23 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 	}
 	else if (submitClicked == true) {
 
-		if (commandFlag = 1) {		// New account
-
+		if (commandFlag == 1) {			// New account
 			accNew();
-			//submitClicked = true;
+		}
+		else if (commandFlag == 2) {	// View account
+			accView();
+		}
+		else if (commandFlag == 3) {	// Edit account
+			accEdit();
+		}
+		else if (commandFlag == 4) {	// Set/change account password
+			accPass();
+		}
+		else if (commandFlag == 5) {	// Delete account
+			accDelete();
+		}
+		else if (commandFlag == 13) {
+			textBox3->Text = "Programmed and Designed by Danny Vuong";
 		}
 	}
 	else {
@@ -444,8 +483,6 @@ private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  
 	textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED. NO PART O\
 F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
 PERMISSION IN WRITING FROM THE UNIVERSITY.");
-}
-private: System::Void dateTimePicker1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

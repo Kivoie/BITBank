@@ -57,10 +57,13 @@ EASE OF RETRIEVAL.\n\nBy clicking Yes you agree that all of the credentials and 
 ation created and managed by this program is solely your responsibility in the event t\
 hat any of the afore mentioned data is leaked or is stolen from an external source. Yo\
 u also agree that BITBank SOFTWORKS LTD. is not liable for any damages caused onto you\
- by the program. If you do not agree, click No to quit the program now.", "Legal Disclaimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information);
+ by the program. If you do not agree, click No to quit the program now.", "Legal Discl\
+aimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information);
 
 	if (System::Windows::Forms::DialogResult::Yes == result) {
-		MessageBox::Show("If you have any text files open (accounts.txt, password.txt, fortune.txt, etc.) please close them now as the data will be unable to save by the program.", "Warning" ,MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("If you have any text files open (accounts.txt, password.txt, \
+fortune.txt, etc.) please close them now as the data will be unable to save by the prog\
+ram.", "Warning" ,MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		Application::Run(gcnew mainInterface());
 	}
 	else {
