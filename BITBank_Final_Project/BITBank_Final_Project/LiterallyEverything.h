@@ -8,8 +8,14 @@
 #include <array>
 #include <cmath>
 #include <ctime>
+#include <time.h>
 #include <chrono>
 #include <Windows.h>
+#include <fstream>
+#include <istream>
+#include <streambuf>
+#include <sstream>
 
 #include "mainInterface.h"
 #include "DBABash.h"
+#include "fortuneDataBase.h"

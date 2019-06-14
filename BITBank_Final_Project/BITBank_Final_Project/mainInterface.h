@@ -1,16 +1,6 @@
 ﻿#pragma once
 #include "LiterallyEverything.h"
-#include "macrodefs.h"
-
-double tbox;
-int tempValue, status;
-char ch, accBuffer[16];
-
-FILE *accounts;	//Customer's account..........................[accounts.txt]
-FILE *password;	//Encrypted (basic encryption)................[password.txt]
-FILE *fortune;	//Home fortune................................[fortune.txt]
-FILE *temp;		//Temporary storate for password encryption...[temporary.txt]
-FILE *balance;	//For account balance in CAD..................[balance.txt]
+#include "defspace.h"
 
 namespace BITBankFinalProject {
 
@@ -20,6 +10,7 @@ namespace BITBankFinalProject {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::IO;
 
 	/// <summary>
 	/// Summary for mainInterface
@@ -34,7 +25,7 @@ namespace BITBankFinalProject {
 			tbox = 0;
 			tempValue = 0;
 			commandFlag = 0;
-
+			srand(time(NULL));
 
 		}
 
@@ -45,7 +36,6 @@ namespace BITBankFinalProject {
 	private: void accEdit();
 	private: void accPass();
 	private: void accDelete();
-	private: void iSpendMain();
 	private: void marketMain();
 	private: void etransMain();
 	private: void helpMain();
@@ -57,8 +47,30 @@ namespace BITBankFinalProject {
 	private: void accountsThanos();
 	private: void passwordEncryption();
 	private: void accountsView();
-	private: System::Windows::Forms::Timer^  timer1;
-	private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: void iSpendAdd();
+	private: void iSpendView();
+
+	private: void fortune_switch();
+	private: void fortune_1();
+	private: void fortune_2();
+	private: void fortune_3();
+	private: void fortune_4();
+	private: void fortune_5();
+	private: void fortune_6();
+	private: void fortune_7();
+	private: void fortune_8();
+	private: void fortune_9();
+	private: void fortune_10();
+	private: void fortune_11();
+	private: void fortune_12();
+	private: void fortune_13();
+	private: void fortune_14();
+	private: void fortune_15();
+	private: void fortune_16();
+	private: void fortune_17();
+	private: void fortune_18();
+	private: void fortune_19();
+	private: void fortune_20();
 
 
 	private: bool submitClicked = false;
@@ -72,7 +84,9 @@ namespace BITBankFinalProject {
 			 // [3] = Edit Account
 			 // [4] = New/Change password
 			 // [5] = Delete Account
-			 // [6] = 
+			 // [6] = iSpend Add
+			 // [7] = iSpend View
+			 // [8] = fortune
 			 // [...]
 			 // [13] = Help
 
@@ -101,6 +115,8 @@ namespace BITBankFinalProject {
 	private: System::Windows::Forms::Button^  button7;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::ComponentModel::IContainer^  components;
+	private: System::Windows::Forms::Timer^  timer1;
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
 
 
 
@@ -215,6 +231,7 @@ namespace BITBankFinalProject {
 			this->button4->Text = L"iSpend©";
 			this->button4->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &mainInterface::button4_Click);
 			// 
 			// button5
 			// 
@@ -425,14 +442,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	textBox1->Text = ("Account Management\r\n");
 	smallSplitter
 	textBox1->AppendText("\r\nWhat would you like to do?");
-	textBox1->AppendText("\r\n[acc New] \tMake a new account");
-	textBox1->AppendText("\r\n[acc View] \tView account");
-	textBox1->AppendText("\r\n[acc Edit] \tEdit account");
-	textBox1->AppendText("\r\n[acc Pass] \tEdit password");
-	textBox1->AppendText("\r\n[acc Delete] \tDelete account from database");
-
-
-	
+	textBox1->AppendText("\r\n[acc New]......Make a new account");
+	textBox1->AppendText("\r\n[acc View].....View account");
+	textBox1->AppendText("\r\n[acc Edit].....Edit account");
+	textBox1->AppendText("\r\n[acc Pass].....Edit password");
+	textBox1->AppendText("\r\n[acc Delete]...Delete account from database");
 	
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {	//Submit button
@@ -442,18 +456,18 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 	//The order matters, do not change order
 	if (submitClicked == false) {
 		accMain();		//Account main loop
-		iSpendMain();	//iSpend main loop
-		marketMain();	//market main loop
-		etransMain();	//etransfer main loop
-		helpMain();		//help main loop
+		//iSpendMain();	//iSpend main loop
+		//marketMain();	//market main loop
+	//	etransMain();	//etransfer main loop
+		//helpMain();		//help main loop
 	}
 	else if (submitClicked == true) {
 
 		if (commandFlag == 1) {			// New account
 			accNew();
 		}
-		else if (commandFlag == 2) {	// View account
-			accView();
+		else if (commandFlag == 2) {	// View account (this conditional doesn't really do anything anymore)
+		//nothing
 		}
 		else if (commandFlag == 3) {	// Edit account
 			accEdit();
@@ -461,21 +475,29 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 		else if (commandFlag == 4) {	// Set/change account password
 			accPass();
 		}
-		else if (commandFlag == 5) {	// Delete account
-			accDelete();
+		else if (commandFlag == 5) {	// Delete account (and neither does this one too)
+		//nothing
+		}
+		else if (commandFlag == 6) {	// Add new entry into your iSpend tracker
+			iSpendAdd();
+		}
+		else if (commandFlag == 7) {	// View iSpend tracker log (with timestamps)
+		//nothing
+		}
+		else if (commandFlag == 8) {	// Display fortune (random from 1-20)
+		//nothing
 		}
 		else if (commandFlag == 13) {
-			textBox3->Text = "Programmed and Designed by Danny Vuong";
+		
 		}
 	}
 	else {
 		flagnotfound();	//flag not found error box
 	}
-
 }
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-	textBox1->Text = "BITBank DBA developed and designed by Danny Vuong.\r\n";
+	textBox1->Text = "BITBank DBA developed and designed by Danny Vuong, Catherine Liu, and Kenny Chan\r\n";
 	textBox1->AppendText("Student ID: 101040331\r\n");
 	textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
 	textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
@@ -483,6 +505,17 @@ private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  
 	textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED. NO PART O\
 F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
 PERMISSION IN WRITING FROM THE UNIVERSITY.");
+}
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	textBox1->Text = "iSpend (logs are in GMT (Greenwich Mean Time))\r\n";
+	smallSplitter
+	textBox1->AppendText("What would you like to do?");
+	textBox1->AppendText("\r\n[ispend Add].......Adds a new entry into your iSpend tracker");
+	textBox1->AppendText("\r\n[ispend View]......View all of your iSpend logs");
+	textBox1->AppendText("\r\n[fortune]..........Contains helpful hints and tips on how to redu\
+ce personal spending.");
+
 }
 };
 }

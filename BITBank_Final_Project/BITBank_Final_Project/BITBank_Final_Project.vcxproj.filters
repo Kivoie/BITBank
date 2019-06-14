@@ -30,7 +30,10 @@
     <ClInclude Include="LiterallyEverything.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="macrodefs.h">
+    <ClInclude Include="defspace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fortuneDataBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

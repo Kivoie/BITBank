@@ -18,12 +18,11 @@ void mainInterface::accMain() {
 		textBox2->Clear();		//Clear command line box
 		fopen_s(&accounts, "accounts.txt", "r");
 		accountsNULLCheck();
-
 	}
 	else if (textBox2->Text == "acc View") {	//View Account
 		commandFlag = 2;
-		submitRoutine		//This is the macro for	"submitClicked = true;" and "textBox2->Clear();"
-		textBox3->Text = "Press the submit button again to scan for the account list";
+		submitRoutine			//This is the macro for	"submitClicked = true;" and "textBox2->Clear();"
+		accView();
 	}
 	else if (textBox2->Text == "acc Edit") {	//Edit Account
 		commandFlag = 3;
@@ -40,6 +39,36 @@ void mainInterface::accMain() {
 	else if (textBox2->Text == "acc Delete") {
 		commandFlag = 5;
 		submitRoutine
+		accDelete();
+	}
+	else if (textBox2->Text == "ispend Add") {
+		commandFlag = 6;
+		submitRoutine
+		textBox3->Text = "How much did you spend today? (Don't include '$' or ',').";
+	}
+	else if (textBox2->Text == "ispend View") {
+		commandFlag = 7;
+		submitRoutine
+		iSpendView();
+	}
+	else if (textBox2->Text == "fortune") {
+		commandFlag = 8;
+		submitRoutine
+		fortune_switch();
+		submitClicked = false;
+	}
+	else if (textBox2->Text == "help") {
+		commandFlag = 13;
+		submitClicked = false;
+		textBox2->Clear();
+		textBox3->Text = "Ready. Type commands in the box below or click a button.";
+		helpDialogue();
+	}
+	else {
+		textBox3_ErrorColor();
+		textBox3->Text = "\'" + textBox2->Text + "\' is not a recognized command.";
+		submitClicked = false;
+		textBox2->Clear();
 	}
 }
 
@@ -82,7 +111,7 @@ void mainInterface::accEdit() {
 	textBox3->Text = "Your account number has been successfully changed!";
 	textBox2->Clear();
 
-	textBox2->MaxLength = 0;
+	textBox2->MaxLength = 0;		//"Indefinite" length
 
 	submitClicked = false;
 
@@ -108,8 +137,44 @@ void mainInterface::accDelete() {
 // |_|___/ .__/\___|_||_\__,_|
 // ------|_|-------------------
 
-void mainInterface::iSpendMain() {
+void mainInterface::iSpendAdd() {
 
+	char buff[20];
+	struct tm *sTm;
+
+	time_t now = time(0);
+	sTm = gmtime(&now);
+
+	strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
+	printf("%s %s\n", buff, "new entry");
+
+	String^ iSpendAddEntry = textBox2->Text;
+	fopen_s(&iSpend, "iSpend.txt", "a");
+	fprintf(iSpend, "[%s]", buff);
+	fprintf(iSpend, "\t$%s\n", iSpendAddEntry);
+	fclose(iSpend);
+
+	textBox3_OKColor();
+	textBox3->Text = ("Your entry has been added, type 'ispend View' to see it!");
+	textBox2->Clear();
+
+	submitClicked = false;
+
+}
+
+void mainInterface::iSpendView() {
+
+	StreamReader^ DataIn = File::OpenText("ispend.txt");
+	String^ DataStr;
+	int count = 0;
+	textBox1->Text = "";
+	while ((DataStr = DataIn->ReadLine()) != nullptr)
+	{
+		count++;
+		textBox1->AppendText(count + " " + DataStr + "\r\n");
+	}
+
+	submitClicked = false;
 
 }
 
@@ -143,27 +208,17 @@ void mainInterface::etransMain() {
 
 void mainInterface::helpMain() {
 
-	if (textBox2->Text == "help") {
-		commandFlag = 13;
-		submitClicked = false;
-		textBox2->Clear();
-		textBox3->Text = "Ready. Type commands in the box below or click a button.";
-		helpDialogue();
-	}
-	else {
-		textBox3_ErrorColor();
-		textBox3->Text = "\"" + textBox2->Text + "\" is not a recognized command.";
-		submitClicked = false;
-		textBox2->Clear();
-	}
+	
 }
 
 void mainInterface::helpDialogue() {
 
-	textBox1->Text = "Type in commands in the command line below and press submit to ent\
-er them. You can press any of the buttons above to view additional commands for each section. Note \
-that you don't need to pressa section in order to enter in a command.\r\n\r\nFor a version of the fu\
-ull repository click the Credits to view the link to my repository.";
+	textBox1->Text = "BITBank DBA Help\
+\r\n----------------------------------------------------------------------\r\n\
+Type in commands in the command line below and press submit to ent\
+er them. Commands are case sensitive! You can press any of the buttons above to view additional commands \
+for each section. Note that you don't need to click on a section above in order to enter in a co\
+mmand.\r\n\r\nFor a version of the full repository click the Credits to view the link to my repository.";
 
 }
 
@@ -223,7 +278,6 @@ ave a password set. Would you like to change it?", "Password Change", MessageBox
 			submitClicked = false;
 		}
 	}
-
 }
 
 void mainInterface::accountsNULLCheck() {
@@ -255,14 +309,16 @@ void mainInterface::accountsThanos() {
 
 	if (accounts == NULL) {
 		printf("no account(s) found.\n");
+		textBox3_ErrorColor();
+		textBox3->Text = "Error deleting file, no accounts found!";
 	}
 	else {
 		fclose(accounts);
 
-		System::Windows::Forms::DialogResult accountsDelete = MessageBox::Show("Are you abso-tively-po\
-si-lutely sure (i made that up :p) you would like to delete your account? This will NOT send it to the \
-recycle bin. This will completely erase it from the hard drive and can only be recovered again with data \
-recovery software. You may make a new account if you ever decide to delete your current one.", "Delete Acc\
+		System::Windows::Forms::DialogResult accountsDelete = MessageBox::Show("Are you \
+sure you would like to delete your account? THIS WILL NOT SEND IT TO THE \
+RECYCLE BIN. THIS WILL COMPLETELY ERASE IT FROM THE HARD DRIVE AND CAN ONLY BE RECOVERED AGAIN WITH DATA \
+RECOVERY SOFTWARE. You can always make a new account if you ever decide to delete your current one.", "Delete Acc\
 ount", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Warning);
 
 		if (System::Windows::Forms::DialogResult::Yes == accountsDelete) {
@@ -271,11 +327,7 @@ ount", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Warning);
 			textBox3_OKColor();
 			textBox3->Text = "\"accounts.txt\" has been successfully deleted!";
 		}
-
-
 	}
-
-
 }
 
 void mainInterface::passwordEncryption() {
@@ -336,12 +388,12 @@ void mainInterface::accountsView() {
 	fopen_s(&accounts, "accounts.txt", "r");
 
 	if (accounts == NULL) {
-		fclose(accounts);
 		textBox3_ErrorColor();
-		textBox2->Text = "Account not found! Make a new account using \"acc New\"";
+		textBox3->Text = "Account not found! Make a new account using \"acc New\"";
 	}
 	else {
 		fclose(accounts);
+		/*
 		fopen_s(&accounts, "accounts.txt", "r");
 		fgets(accBuffer, 16, accounts);
 		int i = 0;
@@ -356,9 +408,23 @@ void mainInterface::accountsView() {
 				i++;
 			}
 		}
-		printf("%s", accBuffer);
+		printf("%s\n", accBuffer);
+		char* digit = accBuffer;
+		printf("%s\n", digit);
+		
+
+		textBox3->Text = "Your account number is " + Convert::ToChar(*digit) + Convert::ToChar(*(digit+1)) + Conver\
+t::ToChar(*(digit + 2)) + Convert::ToChar(*(digit + 3)) + Convert::ToChar(*(digit + 4)) + Convert::ToCha\
+r(*(digit + 5)) + Convert::ToChar(*(digit + 6)) + Convert::ToChar(*(digit + 7)) + Convert::T\
+oChar(*(digit + 8)) + Convert::ToChar(*(digit + 9)) + Convert::ToChar(*(digit + 10)) + Convert::ToCha\
+r(*(digit + 11)) + Convert::ToChar(*(digit + 12)) + Convert::ToChar(*(digit + 13)) + Convert::ToCha\
+r(*(digit + 14)) + Convert::ToChar(*(digit + 15));*/
 		textBox3_OKColor();
-		textBox3->Text = "Your account number is " + accBuffer[i];
-		fclose(accounts);
+		StreamReader^ DataIn = File::OpenText("accounts.txt");
+		String^ DataStr;
+		while ((DataStr = DataIn->ReadLine()) != nullptr)
+		{
+			textBox3->Text = "Your accounts number is " + DataStr;
+		}
 	}
 }
