@@ -25,7 +25,7 @@ namespace BITBankFinalProject {
 			tbox = 0;
 			tempValue = 0;
 			commandFlag = 0;
-			srand(time(NULL));
+			srand(time(NULL) * 10 / 3);
 
 		}
 
@@ -72,6 +72,8 @@ namespace BITBankFinalProject {
 	private: void fortune_19();
 	private: void fortune_20();
 
+	private: void m_commodities();
+
 
 	private: bool submitClicked = false;
 	private: void textBox3_NeutralColor();
@@ -79,14 +81,17 @@ namespace BITBankFinalProject {
 	private: void textBox3_OKColor();
 	private: bool errorFlag;
 	private: int commandFlag;
-			 // [1] = New Account
-			 // [2] = View Account
-			 // [3] = Edit Account
-			 // [4] = New/Change password
-			 // [5] = Delete Account
+			 // [1] = new Account
+			 // [2] = view Account
+			 // [3] = edit Account
+			 // [4] = new/change password
+			 // [5] = delete Account
 			 // [6] = iSpend Add
 			 // [7] = iSpend View
-			 // [8] = fortune
+			 // [8] = (iSpend) fortune
+			 // [9] = view commodities
+			 // [10] = 
+			 // [11] = transfers
 			 // [...]
 			 // [13] = Help
 
@@ -247,6 +252,7 @@ namespace BITBankFinalProject {
 			this->button5->Text = L"Market";
 			this->button5->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &mainInterface::button5_Click);
 			// 
 			// button6
 			// 
@@ -443,10 +449,10 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	smallSplitter
 	textBox1->AppendText("\r\nWhat would you like to do?");
 	textBox1->AppendText("\r\n[acc New]......Make a new account");
-	textBox1->AppendText("\r\n[acc View].....View account");
-	textBox1->AppendText("\r\n[acc Edit].....Edit account");
-	textBox1->AppendText("\r\n[acc Pass].....Edit password");
-	textBox1->AppendText("\r\n[acc Delete]...Delete account from database");
+	textBox1->AppendText("\r\n[acc View].....View account details");
+	textBox1->AppendText("\r\n[acc Edit].....Edit account details");
+	textBox1->AppendText("\r\n[acc Pass].....New/Edit password");
+	textBox1->AppendText("\r\n[acc Delete]...Delete account from local database");
 	
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {	//Submit button
@@ -513,8 +519,17 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 	textBox1->AppendText("What would you like to do?");
 	textBox1->AppendText("\r\n[ispend Add].......Adds a new entry into your iSpend tracker");
 	textBox1->AppendText("\r\n[ispend View]......View all of your iSpend logs");
-	textBox1->AppendText("\r\n[fortune]..........Contains helpful hints and tips on how to redu\
-ce personal spending.");
+	textBox1->AppendText("\r\n[fortune]..........Contains helpful random hints and tips on manag\
+ing \t\t\t   personal financing");
+
+}
+private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	textBox1->Text = "Market and Commodities\r\n";
+	smallSplitter
+	textBox1->AppendText("What would you like to do?");
+	textBox1->AppendText("\r\n[m Com].......View current BIT Market Commodities Index (BITMCI)");
+	textBox1->AppendText("\r\n[m Inv].......Invest in a commodity listed in the BITMCI");
 
 }
 };

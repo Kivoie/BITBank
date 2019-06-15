@@ -36,6 +36,9 @@
     <ClInclude Include="fortuneDataBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="market_commodities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

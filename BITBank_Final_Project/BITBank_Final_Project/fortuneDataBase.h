@@ -90,6 +90,7 @@ void mainInterface::fortune_20(){
 
 void mainInterface::fortune_switch() {
 
+	srand(time(NULL));
 	int choice = rand() % 20;	//choose a random number from 0 to 19, then pick it's corresponding fortune
 	printf("%d\n", choice);
 	switch (choice) {
@@ -158,5 +159,7 @@ void mainInterface::fortune_switch() {
 
 	textBox1->AppendText("\r\n\r\nDolezal, P. (2018). The Smart Canadian We\
 alth-Builder (3rd ed.). Sidney, BC: Cufflands Publishing.");
+
+	submitClicked = false;
 
 }

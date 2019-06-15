@@ -15,7 +15,10 @@
 #include <istream>
 #include <streambuf>
 #include <sstream>
+#include <random>
+#include <algorithm>
 
 #include "mainInterface.h"
 #include "DBABash.h"
 #include "fortuneDataBase.h"
+#include "market_commodities.h"

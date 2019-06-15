@@ -58,7 +58,7 @@ ation created and managed by this program is solely your responsibility in the e
 hat any of the afore mentioned data is leaked or is stolen from an external source. Yo\
 u also agree that BITBank SOFTWORKS LTD. is not liable for any damages caused onto you\
  by the program. If you do not agree, click No to quit the program now.", "Legal Discl\
-aimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information);
+aimer", MessageBoxButtons::YesNo, MessageBoxIcon::Information, MessageBoxDefaultButton::Button1);
 
 	if (System::Windows::Forms::DialogResult::Yes == result) {
 		MessageBox::Show("If you have any text files open (accounts.txt, password.txt, \

@@ -139,6 +139,7 @@
     <ClInclude Include="mainInterface.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="market_commodities.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

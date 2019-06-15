@@ -12,52 +12,59 @@ using namespace BITBankFinalProject;
 
 void mainInterface::accMain() {
 
-	if (textBox2->Text == "acc New") {	//New Account
+	if (textBox2->Text == "acc New" || textBox2->Text == "-an") {	//New Account
 		commandFlag = 1;		//commandFlag is the multi-value flag for for searching which command has just been entered
 		submitClicked = true;	//submitClicked is the flag for what the "Submit" button functions will perform
 		textBox2->Clear();		//Clear command line box
-		fopen_s(&accounts, "accounts.txt", "r");
 		accountsNULLCheck();
 	}
-	else if (textBox2->Text == "acc View") {	//View Account
+	else if (textBox2->Text == "acc View" || textBox2->Text == "-av") {	//View Account
 		commandFlag = 2;
 		submitRoutine			//This is the macro for	"submitClicked = true;" and "textBox2->Clear();"
 		accView();
 	}
-	else if (textBox2->Text == "acc Edit") {	//Edit Account
+	else if (textBox2->Text == "acc Edit" || textBox2->Text == "-ae") {	//Edit Account
 		commandFlag = 3;
 		submitRoutine
-		fopen_s(&accounts, "accounts.txt", "r");
 		accountsNULLCheck();
 	}
-	else if (textBox2->Text == "acc Pass") {	//New/change account password
+	else if (textBox2->Text == "acc Pass" || textBox2->Text == "-ap") {	//New/change account password
 		commandFlag = 4;
 		submitRoutine
 		fopen_s(&password, "password.txt" , "r");
 		passwordNULLCheck();
 	}
-	else if (textBox2->Text == "acc Delete") {
+	else if (textBox2->Text == "acc Delete" || textBox2->Text == "-ad") {
 		commandFlag = 5;
 		submitRoutine
 		accDelete();
 	}
-	else if (textBox2->Text == "ispend Add") {
+	else if (textBox2->Text == "ispend Add" || textBox2->Text == "-ia") {
 		commandFlag = 6;
 		submitRoutine
-		textBox3->Text = "How much did you spend today? (Don't include '$' or ',').";
+		textBox3->Text = "How much did you spend today? (Don't include '$' or ',')";
 	}
-	else if (textBox2->Text == "ispend View") {
+	else if (textBox2->Text == "ispend View" || textBox2->Text == "-iv") {
 		commandFlag = 7;
 		submitRoutine
 		iSpendView();
 	}
-	else if (textBox2->Text == "fortune") {
+	else if (textBox2->Text == "fortune" || textBox2->Text == "-fo") {
 		commandFlag = 8;
 		submitRoutine
 		fortune_switch();
-		submitClicked = false;
 	}
-	else if (textBox2->Text == "help") {
+	else if (textBox2->Text == "m Com" || textBox2->Text == "-mc") {
+		commandFlag = 9;
+		submitRoutine
+		m_commodities();
+	}
+	else if (textBox2->Text == "m Inv" || textBox2->Text == "-mi") {
+		commandFlag = 10;
+		submitRoutine
+		m_commodities();
+	}
+	else if (textBox2->Text == "help" || textBox2->Text == "Help" || textBox2->Text == "-h") {
 		commandFlag = 13;
 		submitClicked = false;
 		textBox2->Clear();
@@ -101,11 +108,11 @@ void mainInterface::accView() {
 
 void mainInterface::accEdit() {
 
-	String ^ accNumber = textBox2->Text;
+	String ^ accNumberEdit = textBox2->Text;
 
 	fopen_s(&accounts, "accounts.txt", "w+");
 
-	fprintf(accounts, "%s", accNumber);
+	fprintf(accounts, "%s", accNumberEdit);
 	fclose(accounts);
 	textBox3_OKColor();
 	textBox3->Text = "Your account number has been successfully changed!";
@@ -143,7 +150,7 @@ void mainInterface::iSpendAdd() {
 	struct tm *sTm;
 
 	time_t now = time(0);
-	sTm = gmtime(&now);
+	sTm = localtime(&now);
 
 	strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
 	printf("%s %s\n", buff, "new entry");
@@ -151,7 +158,7 @@ void mainInterface::iSpendAdd() {
 	String^ iSpendAddEntry = textBox2->Text;
 	fopen_s(&iSpend, "iSpend.txt", "a");
 	fprintf(iSpend, "[%s]", buff);
-	fprintf(iSpend, "\t$%s\n", iSpendAddEntry);
+	fprintf(iSpend, " I spent $%s today!\n", iSpendAddEntry);
 	fclose(iSpend);
 
 	textBox3_OKColor();
@@ -167,12 +174,14 @@ void mainInterface::iSpendView() {
 	StreamReader^ DataIn = File::OpenText("ispend.txt");
 	String^ DataStr;
 	int count = 0;
-	textBox1->Text = "";
+	textBox1->Clear();
 	while ((DataStr = DataIn->ReadLine()) != nullptr)
 	{
 		count++;
 		textBox1->AppendText(count + " " + DataStr + "\r\n");
 	}
+
+	DataIn->Close();
 
 	submitClicked = false;
 
@@ -264,7 +273,8 @@ void mainInterface::passwordNULLCheck() {
 	else {
 		fclose(password);
 		System::Windows::Forms::DialogResult passwordCheck = MessageBox::Show("You already ha\
-ave a password set. Would you like to change it?", "Password Change", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Warning);
+ave a password set. Would you like to change it?", "Password Change", MessageBoxButtons::Ye\
+sNoCancel, MessageBoxIcon::Warning, MessageBoxDefaultButton::Button2);
 
 		if (System::Windows::Forms::DialogResult::Yes == passwordCheck) {
 			textBox3->Text = "Please enter a 8-20 digit password";
@@ -282,6 +292,8 @@ ave a password set. Would you like to change it?", "Password Change", MessageBox
 
 void mainInterface::accountsNULLCheck() {
 
+	fopen_s(&accounts, "accounts.txt", "r");
+
 	if (accounts == NULL) {
 		textBox3->Text = "Please enter your 15 digit account number.";
 		textBox2->MaxLength = 15;
@@ -290,7 +302,7 @@ void mainInterface::accountsNULLCheck() {
 		fclose(accounts);
 		System::Windows::Forms::DialogResult accountsCheck = MessageBox::Show("You already have an \
 account registered. Would you like to overwrite it?", "Account Change", MessageBoxButtons::YesNo\
-Cancel, MessageBoxIcon::Warning);
+Cancel, MessageBoxIcon::Warning, MessageBoxDefaultButton::Button2);
 
 		if (System::Windows::Forms::DialogResult::Yes == accountsCheck) {
 			textBox3->Text = "Please enter your 15 digit account number.";
@@ -319,7 +331,7 @@ void mainInterface::accountsThanos() {
 sure you would like to delete your account? THIS WILL NOT SEND IT TO THE \
 RECYCLE BIN. THIS WILL COMPLETELY ERASE IT FROM THE HARD DRIVE AND CAN ONLY BE RECOVERED AGAIN WITH DATA \
 RECOVERY SOFTWARE. You can always make a new account if you ever decide to delete your current one.", "Delete Acc\
-ount", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Warning);
+ount", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Warning, MessageBoxDefaultButton::Button2);
 
 		if (System::Windows::Forms::DialogResult::Yes == accountsDelete) {
 			remove("accounts.txt");
@@ -393,38 +405,20 @@ void mainInterface::accountsView() {
 	}
 	else {
 		fclose(accounts);
-		/*
-		fopen_s(&accounts, "accounts.txt", "r");
-		fgets(accBuffer, 16, accounts);
-		int i = 0;
-		while (1) {
 
-			ch = fgetc(accounts);
-			if (ch = EOF) {
-				break;
-			}
-			else {
-				accBuffer[i] = ch;
-				i++;
-			}
-		}
-		printf("%s\n", accBuffer);
-		char* digit = accBuffer;
-		printf("%s\n", digit);
-		
-
-		textBox3->Text = "Your account number is " + Convert::ToChar(*digit) + Convert::ToChar(*(digit+1)) + Conver\
-t::ToChar(*(digit + 2)) + Convert::ToChar(*(digit + 3)) + Convert::ToChar(*(digit + 4)) + Convert::ToCha\
-r(*(digit + 5)) + Convert::ToChar(*(digit + 6)) + Convert::ToChar(*(digit + 7)) + Convert::T\
-oChar(*(digit + 8)) + Convert::ToChar(*(digit + 9)) + Convert::ToChar(*(digit + 10)) + Convert::ToCha\
-r(*(digit + 11)) + Convert::ToChar(*(digit + 12)) + Convert::ToChar(*(digit + 13)) + Convert::ToCha\
-r(*(digit + 14)) + Convert::ToChar(*(digit + 15));*/
 		textBox3_OKColor();
 		StreamReader^ DataIn = File::OpenText("accounts.txt");
-		String^ DataStr;
-		while ((DataStr = DataIn->ReadLine()) != nullptr)
+		String^ DataAcc;
+		while ((DataAcc = DataIn->ReadLine()) != nullptr)
 		{
-			textBox3->Text = "Your accounts number is " + DataStr;
+			textBox3->Text = "Your accounts number is " + DataAcc;
 		}
+
+		DataIn->Close();	//Call the Close method for DataIn. Closes the stream reader
+		//This bug was giving me issues earlier, basically whenever i would try and do
+		//"acc View" and then "acc Edit", my program would crash right after I clicked
+		//Submit to enter in my account number. This method fixed it by closing the
+		//stream reader so that it isn't being used after accView is done.
+
 	}
 }
