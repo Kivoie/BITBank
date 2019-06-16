@@ -12,6 +12,7 @@ void mainInterface::m_commodities() {
 		remove("BITMCI.txt");
 		fopen_s(&BITMCI, "BITMCI.txt", "w+");
 
+		invest_num = 0;
 
 		for (k = 0; k < 8; k++) {
 			fprintf(BITMCI, "%s\t|   ", commodityArray[k]);
@@ -20,7 +21,7 @@ void mainInterface::m_commodities() {
 			for (int m = 0; m < index_max; m += index_scale) {	//Index scale, increments how many until the program will print *
 
 				fprintf(BITMCI, "* ");
-
+				invest_num += 1;
 			}
 			fprintf(BITMCI, "\n");
 		}
@@ -39,9 +40,7 @@ void mainInterface::m_commodities() {
 		}
 		DataIn->Close();	//Important!!
 
-		textBox1->AppendText("\r\n\r\n\r\n(\'*\' = 10,000 units)");
+		textBox1->AppendText("\r\n\r\n(\'*\' = 10,000 units)\r\nType \"-mi\" to invest in a share!");
 
-		submitClicked = false;
-		//textBox1->AppendText();
 
 }

@@ -70,8 +70,11 @@ ram.", "Warning" ,MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		Application::Exit();
 	}
 
+	//N.B. Be cautious when coding file handling as it may potentially fuck up your system.
+	//Like writing 44,000 KB worth of ASCII data per second to a text file.
+	//Or remove()-ing a System file/directory hehe...
 
-	
+	printf("Thank you for testing the application!\n");
 
     return 0;
 }

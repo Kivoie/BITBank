@@ -89,8 +89,8 @@ namespace BITBankFinalProject {
 			 // [6] = iSpend Add
 			 // [7] = iSpend View
 			 // [8] = (iSpend) fortune
-			 // [9] = view commodities
-			 // [10] = 
+			 // [9] = view commodities and investments
+			 // [10] = invest in an equity
 			 // [11] = transfers
 			 // [...]
 			 // [13] = Help
@@ -177,7 +177,7 @@ namespace BITBankFinalProject {
 			// 
 			this->button1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.BackgroundImage")));
 			this->button1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button1->Font = (gcnew System::Drawing::Font(L"Century", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(63, 184);
@@ -194,7 +194,7 @@ namespace BITBankFinalProject {
 			this->button2->BackColor = System::Drawing::SystemColors::Control;
 			this->button2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.BackgroundImage")));
 			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button2->Font = (gcnew System::Drawing::Font(L"Century", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button2->Location = System::Drawing::Point(190, 184);
@@ -210,7 +210,7 @@ namespace BITBankFinalProject {
 			// 
 			this->button3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button3.BackgroundImage")));
 			this->button3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Century", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->Location = System::Drawing::Point(316, 308);
@@ -226,7 +226,7 @@ namespace BITBankFinalProject {
 			// 
 			this->button4->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.BackgroundImage")));
 			this->button4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button4->Font = (gcnew System::Drawing::Font(L"Century", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button4->Location = System::Drawing::Point(316, 184);
@@ -242,7 +242,7 @@ namespace BITBankFinalProject {
 			// 
 			this->button5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.BackgroundImage")));
 			this->button5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button5->Font = (gcnew System::Drawing::Font(L"Century", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button5->Location = System::Drawing::Point(63, 308);
@@ -258,7 +258,7 @@ namespace BITBankFinalProject {
 			// 
 			this->button6->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button6.BackgroundImage")));
 			this->button6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button6->Font = (gcnew System::Drawing::Font(L"Century", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button6->Location = System::Drawing::Point(190, 308);
@@ -493,6 +493,12 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 		else if (commandFlag == 8) {	// Display fortune (random from 1-20)
 		//nothing
 		}
+		else if (commandFlag == 9) {	// market commodities
+		//nothing
+		}
+		else if (commandFlag == 10) {	// equity investment
+			marketMain();
+		}
 		else if (commandFlag == 13) {
 		
 		}
@@ -503,8 +509,9 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 }
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-	textBox1->Text = "BITBank DBA developed and designed by Danny Vuong, Catherine Liu, and Kenny Chan\r\n";
-	textBox1->AppendText("Student ID: 101040331\r\n");
+	textBox1->Text = "BITBank DBA developed and designed by Danny Vuong 101040331, Catherin\
+e Liu 101109688, and Kenny Chan 100761487\r\n";
+	textBox1->AppendText("Questions and Inquiry go to either of my student emails");
 	textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
 	textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
 	textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");

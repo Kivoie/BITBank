@@ -58,11 +58,21 @@ void mainInterface::accMain() {
 		commandFlag = 9;
 		submitRoutine
 		m_commodities();
+		submitClicked = false;
 	}
 	else if (textBox2->Text == "m Inv" || textBox2->Text == "-mi") {
 		commandFlag = 10;
 		submitRoutine
-		m_commodities();
+		if (invest_num == 0) {
+
+			textBox3_ErrorColor();
+			textBox3->Text = "You need to type \"-mc\" to see the market first!";
+
+			submitClicked = false;
+
+			return;
+		}
+		textBox3->Text = "What equity would you like to invest in?";
 	}
 	else if (textBox2->Text == "help" || textBox2->Text == "Help" || textBox2->Text == "-h") {
 		commandFlag = 13;
@@ -195,6 +205,46 @@ void mainInterface::iSpendView() {
 
 void mainInterface::marketMain() {
 
+	while (submitClicked == true) {
+
+		if (textBox2->Text == "Copper" || textBox2->Text == "Zinc" || textBox2->Text == "Alm." || textBox2\
+			->Text == "Gold" || textBox2->Text == "Nickel" || textBox2->Text == "Lead" || textBox2->Text == "Cr\
+. Oil" || textBox2->Text == "Silver") {
+
+			String^ userShareInput = textBox2->Text;
+
+			char buff[20];
+			struct tm *sTm;
+
+			time_t now = time(0);
+			sTm = localtime(&now);
+
+			strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
+			printf("%s %s\n", buff, "new entry");
+
+			textBox1->AppendText("\r\n\r\nYou have invested in " + invest_num * 10000 + " shares of " + textBox2->Text + ".");
+			fopen_s(&iSpend, "iSpend.txt", "a");
+			fprintf(iSpend, "[%s]", buff);
+			fprintf(iSpend, " I invested $%d shares in %s today!\n", invest_num * 10000, userShareInput);
+			fclose(iSpend);
+
+			textBox3_OKColor();
+			textBox3->Text = "Investment successful, type \"-iv\" to view your investment!";
+			textBox2->Clear();
+
+			submitClicked = false;
+		}
+		else {
+
+			textBox3_ErrorColor();
+			textBox2->Clear();
+			textBox3->Text = "Share not found. Please select a valid share above.";
+
+			submitClicked = true;
+
+			break;
+		}
+	}
 
 }
 
@@ -217,7 +267,7 @@ void mainInterface::etransMain() {
 
 void mainInterface::helpMain() {
 
-	
+
 }
 
 void mainInterface::helpDialogue() {
@@ -362,19 +412,20 @@ void mainInterface::passwordEncryption() {
 		}
 		else
 		{
-			ch = ch + 100;				//Weak encryption algorithm :p
+			ch = ch + 15;				//Weak encryption algorithm :p
 			fputc(ch, password);		//place text into "password.txt"
 		}
 	}
 
-	ch = NULL;
+	ch = NULL;	//initialized to NULL since it would be a security flaw, otherwise
+				//the last character will still be in memory and that's a big no no
 	fclose(password);
 	fclose(temp);
 
 	fopen_s(&temp, "temporary.txt", "w");	//Comment out these 4 lines if you want proof that the your 
 	fprintf(temp, "");						//text files have saved. Open up the temporary.txt file
 	fclose(temp);							//located in "directory pending" to view the text you've entered.
-	status = remove("temporary.txt");		//Thanos's the temporary file. *finger snap*
+	status = remove("temporary.txt");		//This line Thanos's the temporary file. *finger snap*
 
 	if (status == 0) {
 		printf("temporary.txt removed\n");	//debugging msg
@@ -419,6 +470,5 @@ void mainInterface::accountsView() {
 		//"acc View" and then "acc Edit", my program would crash right after I clicked
 		//Submit to enter in my account number. This method fixed it by closing the
 		//stream reader so that it isn't being used after accView is done.
-
 	}
 }

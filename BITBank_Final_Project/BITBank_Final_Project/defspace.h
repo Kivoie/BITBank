@@ -8,26 +8,16 @@
 
 //variable declarations
 double tbox;
-int tempValue, status;
+int tempValue, status, invest_num;
 char ch, accBuffer[17];
 
 //file handling declarations
-FILE *accounts;	//Customer's account..........................[accounts.txt]
-FILE *password;	//Encrypted (basic encryption)................[password.txt]
-FILE *fortune;	//Home fortune................................[fortune.txt]
-FILE *temp;		//Temporary storate for password encryption...[temporary.txt]
-FILE *balance;	//For account balance in CAD..................[balance.txt]
-FILE *iSpend;	//iSpend proprietary spending tracker.........[iSpend.txt]
-FILE *market;	//Information about market (fake).............[market.txt]
-FILE *BITMCI;	//BIT Market Commodities Index................[BITMCI.txt]
-FILE *transfer; //Data for electronic transfer of funds.......[transfer.txt]
-
-//macros and defs for commodities index
-#define copper textBox1->AppendText("\r\nCopper ");
-#define zinc textBox1->AppendText("\r\nZinc ");
-#define gold  textBox1->AppendText("\r\nGold ");
-#define nickel textBox1->AppendText("\r\nNickel ");
-#define aluminum textBox1->AppendText("\r\nAluminum ");
-#define lead textBox1->AppendText("\r\nLead ");
-#define coil textBox1->AppendText("\r\nCrude Oil ");
-#define silver textBox1->AppendText("\r\nSilver ");
+FILE *accounts;	//Customer's account..........................[accounts.txt] o
+FILE *password;	//Encrypted (basic encryption)................[password.txt] o
+FILE *fortune;	//Home fortune................................[fortune.txt] x
+FILE *temp;		//Temporary storate for password encryption...[temporary.txt] o
+FILE *balance;	//For account balance in CAD..................[balance.txt] x
+FILE *iSpend;	//iSpend proprietary spending tracker.........[iSpend.txt] o
+FILE *market;	//Information about market (fake).............[market.txt] x
+FILE *BITMCI;	//BIT Market Commodities Index................[BITMCI.txt] o
+FILE *transfer; //Data for electronic transfer of funds.......[transfer.txt] x
