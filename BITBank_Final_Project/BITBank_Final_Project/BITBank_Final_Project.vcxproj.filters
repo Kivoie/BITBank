@@ -24,9 +24,6 @@
     <ClInclude Include="mainInterface.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="DBABash.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LiterallyEverything.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -37,6 +34,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="market_commodities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transfers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="marketGeneral.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iSpend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="help.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="miscellaneous.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="accounts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -132,16 +132,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DBABash.h" />
+    <ClInclude Include="accounts.h" />
     <ClInclude Include="defspace.h" />
     <ClInclude Include="fortuneDataBase.h" />
+    <ClInclude Include="help.h" />
+    <ClInclude Include="iSpend.h" />
     <ClInclude Include="LiterallyEverything.h" />
     <ClInclude Include="mainInterface.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="marketGeneral.h" />
     <ClInclude Include="market_commodities.h" />
+    <ClInclude Include="miscellaneous.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="transfers.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />

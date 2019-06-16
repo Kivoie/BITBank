@@ -29,26 +29,32 @@ namespace BITBankFinalProject {
 
 		}
 
-	//Function prototypes (for DBABash.h)
-	private: void accMain();
+	//Accounts
+
+	private: void mainLoop();
 	private: void accNew();
 	private: void accView();
 	private: void accEdit();
 	private: void accPass();
 	private: void accDelete();
-	private: void marketMain();
-	private: void etransMain();
-	private: void helpMain();
-
-	private: void flagnotfound();
-	private: void helpDialogue();
+	private: void accountsView();
 	private: void passwordNULLCheck();
 	private: void accountsNULLCheck();
 	private: void accountsThanos();
 	private: void passwordEncryption();
-	private: void accountsView();
+
+	//iSpend
+
 	private: void iSpendAdd();
 	private: void iSpendView();
+	private: void marketMain();
+
+	//Market & Commodities
+
+	private: void m_commodities();
+	private: void etransMain();
+
+	//fortune (iSpend)
 
 	private: void fortune_switch();
 	private: void fortune_1();
@@ -72,13 +78,16 @@ namespace BITBankFinalProject {
 	private: void fortune_19();
 	private: void fortune_20();
 
-	private: void m_commodities();
 
 
-	private: bool submitClicked = false;
+	//help, misc., and declarations
+
+	private: void flagnotfound();
+	private: void helpDialogue();
 	private: void textBox3_NeutralColor();
 	private: void textBox3_ErrorColor();
 	private: void textBox3_OKColor();
+	private: bool submitClicked = false;
 	private: bool errorFlag;
 	private: int commandFlag;
 			 // [1] = new Account
@@ -91,9 +100,11 @@ namespace BITBankFinalProject {
 			 // [8] = (iSpend) fortune
 			 // [9] = view commodities and investments
 			 // [10] = invest in an equity
-			 // [11] = transfers
-			 // [...]
-			 // [13] = Help
+			 // [11] = transfer to someone
+			 // [12] = create contacts
+			 // [13] = view contacts in your directory
+			 // [14] = Help
+			 // [15] ...
 
 	protected:
 		/// <summary>
@@ -268,6 +279,7 @@ namespace BITBankFinalProject {
 			this->button6->Text = L"Transfer";
 			this->button6->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &mainInterface::button6_Click_1);
 			// 
 			// textBox1
 			// 
@@ -403,11 +415,7 @@ namespace BITBankFinalProject {
 #pragma endregion
 	private: System::Void mainInterface_Load(System::Object^  sender, System::EventArgs^  e) {
 	}
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		textBox1->Text = ("Welcome to BITBank DBA 2019\r\nPress a button or enter in a command to begin. Type help or click the Help button for help on commands and functions.\r\n");
-
-	}
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		//printf("print help commands/functions\n");		//For debugging
@@ -443,25 +451,13 @@ private: System::Void textBox1_TextChanged(System::Object^  sender, System::Even
 	}
 
 }
-private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {	//
-
-	textBox1->Text = ("Account Management\r\n");
-	smallSplitter
-	textBox1->AppendText("\r\nWhat would you like to do?");
-	textBox1->AppendText("\r\n[acc New]......Make a new account");
-	textBox1->AppendText("\r\n[acc View].....View account details");
-	textBox1->AppendText("\r\n[acc Edit].....Edit account details");
-	textBox1->AppendText("\r\n[acc Pass].....New/Edit password");
-	textBox1->AppendText("\r\n[acc Delete]...Delete account from local database");
-	
-}
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {	//Submit button
 
 	textBox3_NeutralColor();
 
 	//The order matters, do not change order
 	if (submitClicked == false) {
-		accMain();		//Account main loop
+		mainLoop();		//Account main loop
 		//iSpendMain();	//iSpend main loop
 		//marketMain();	//market main loop
 	//	etransMain();	//etransfer main loop
@@ -473,7 +469,7 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 			accNew();
 		}
 		else if (commandFlag == 2) {	// View account (this conditional doesn't really do anything anymore)
-		//nothing
+		//nothing, no user input required
 		}
 		else if (commandFlag == 3) {	// Edit account
 			accEdit();
@@ -482,19 +478,19 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 			accPass();
 		}
 		else if (commandFlag == 5) {	// Delete account (and neither does this one too)
-		//nothing
+		//nothing, no user input required
 		}
 		else if (commandFlag == 6) {	// Add new entry into your iSpend tracker
 			iSpendAdd();
 		}
 		else if (commandFlag == 7) {	// View iSpend tracker log (with timestamps)
-		//nothing
+		//nothing, no user input required
 		}
 		else if (commandFlag == 8) {	// Display fortune (random from 1-20)
-		//nothing
+		//nothing, no user input required
 		}
 		else if (commandFlag == 9) {	// market commodities
-		//nothing
+		//nothing, no user input required
 		}
 		else if (commandFlag == 10) {	// equity investment
 			marketMain();
@@ -507,17 +503,25 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 		flagnotfound();	//flag not found error box
 	}
 }
-private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-	textBox1->Text = "BITBank DBA developed and designed by Danny Vuong 101040331, Catherin\
-e Liu 101109688, and Kenny Chan 100761487\r\n";
-	textBox1->AppendText("Questions and Inquiry go to either of my student emails");
-	textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
-	textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
-	textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");
-	textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED. NO PART O\
-F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
-PERMISSION IN WRITING FROM THE UNIVERSITY.");
+	textBox1->Text = "Home";
+	crlf largeSplitter
+	textBox1->AppendText("Welcome to BITBank DBA 2019\r\nPress a button or enter \
+in a command to begin. Type help or click the Help button for help on commands and functions.\r\n");
+
+}
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {	//
+
+	textBox1->Text = ("Account Management\r\n");
+	smallSplitter
+		textBox1->AppendText("\r\nWhat would you like to do?");
+	textBox1->AppendText("\r\n[acc New]......Make a new account");
+	textBox1->AppendText("\r\n[acc View].....View account details");
+	textBox1->AppendText("\r\n[acc Edit].....Edit account details");
+	textBox1->AppendText("\r\n[acc Pass].....New/Edit password");
+	textBox1->AppendText("\r\n[acc Delete]...Delete account from local database");
+
 }
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -538,6 +542,29 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 	textBox1->AppendText("\r\n[m Com].......View current BIT Market Commodities Index (BITMCI)");
 	textBox1->AppendText("\r\n[m Inv].......Invest in a commodity listed in the BITMCI");
 
+}
+private: System::Void button6_Click_1(System::Object^  sender, System::EventArgs^  e) {
+
+	textBox1->Text = "Electronic Transfers\r\n";
+	smallSplitter
+	textBox1->AppendText("[trn Send].......Send funds to another account electronically\r\n");
+	textBox1->AppendText("[trn New]........Add a new contact to your directory\r\n");
+	textBox1->AppendText("[trn View].......View a list of all your contacts");
+
+}
+private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	textBox1->Text = "Credits";
+	crlf largeSplitter
+		textBox1->AppendText("BITBank DBA developed and designed by Danny Vuong 101040331, Catherin\
+e Liu 101109688, and Kenny Chan 100761487\r\n");
+	textBox1->AppendText("Questions and Inquiry go to either of my student emails");
+	textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
+	textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
+	textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");
+	textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED. NO PART O\
+F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
+PERMISSION IN WRITING FROM THE UNIVERSITY.");
 }
 };
 }
