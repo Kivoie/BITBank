@@ -9,7 +9,7 @@ Basic Info
 **Student ID:** 101040331  
 **Instructor:** Chris Joslin  
 **Assignment:** Final Project  
-_Please refer to cuLearn for more information about my project._
+_Please check my documentation if you would like all the information about my source code. Click **Wiki** on the left side._
 
 
 #### **THIS REPOSITORY WILL BECOME PRIVATE STARTING SUNDAY JULY 14th 23:59 EST.**
