@@ -22,8 +22,6 @@ namespace BITBankFinalProject {
 		{
 			InitializeComponent();
 			
-			tbox = 0;
-			tempValue = 0;
 			commandFlag = 0;
 			srand(time(NULL) * 10 / 3);
 
@@ -464,9 +462,9 @@ private: System::Void textBox2_TextChanged(System::Object^  sender, System::Even
 private: System::Void textBox1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 
 	
-	if (Int32::TryParse(textBox1->Text, tempValue)) {
-		tbox = float::Parse(textBox1->Text);
-	}
+	//if (Int32::TryParse(textBox1->Text, tempValue)) {
+	//	tbox = float::Parse(textBox1->Text);
+	//}
 
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {	//Submit button
