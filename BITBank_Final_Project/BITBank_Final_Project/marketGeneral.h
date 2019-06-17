@@ -5,7 +5,7 @@
 // |_|  |_/_/ \_\_|_\_|\_\___| |_|  
 // ---------------------------------
 
-void mainInterface::marketMain() {
+void mainInterface::marketGeneral() {
 
 	while (submitClicked == true) {
 

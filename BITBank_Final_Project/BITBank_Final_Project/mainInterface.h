@@ -29,6 +29,14 @@ namespace BITBankFinalProject {
 
 		}
 
+//   ___ _      _   ___ ___   __  __ ___ _____ _  _  ___  ___    ___ ___  ___ _____ ___ _______   _____ ___ ___ 
+//  / __| |    /_\ / __/ __| |  \/  | __|_   _| || |/ _ \|   \  | _ \ _ \/ _ \_   _/ _ \_   _\ \ / / _ \ __/ __|
+// | (__| |__ / _ \\__ \__ \ | |\/| | _|  | | | __ | (_) | |) | |  _/   / (_) || || (_) || |  \ V /|  _/ _|\__ \
+//  \___|____/_/ \_\___/___/ |_|  |_|___| |_| |_||_|\___/|___/  |_| |_|_\\___/ |_| \___/ |_|   |_| |_| |___|___/
+// ==============================================================================================================
+
+	//Press [CTRL]+[LEFT CLICK] on any of these below to view their source code
+
 	//Accounts
 
 	private: void mainLoop();
@@ -47,12 +55,18 @@ namespace BITBankFinalProject {
 
 	private: void iSpendAdd();
 	private: void iSpendView();
-	private: void marketMain();
 
 	//Market & Commodities
 
 	private: void m_commodities();
-	private: void etransMain();
+	private: void marketGeneral();
+
+	//Transfers and Bill Payments
+
+	private: void etransSend();
+	private: void etransLog();
+	private: void etransNew();
+	private: void etransHistory();
 
 	//fortune (iSpend)
 
@@ -88,6 +102,10 @@ namespace BITBankFinalProject {
 	private: void textBox3_ErrorColor();
 	private: void textBox3_OKColor();
 	private: bool submitClicked = false;
+	private: bool send2Flag = false;
+	private: char transBuff;
+	private: String^ destPhoneNumber;
+	private: String^ destFunds;
 	private: bool errorFlag;
 	private: int commandFlag;
 			 // [1] = new Account
@@ -457,11 +475,7 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 
 	//The order matters, do not change order
 	if (submitClicked == false) {
-		mainLoop();		//Account main loop
-		//iSpendMain();	//iSpend main loop
-		//marketMain();	//market main loop
-	//	etransMain();	//etransfer main loop
-		//helpMain();		//help main loop
+		mainLoop();		//Main loop
 	}
 	else if (submitClicked == true) {
 
@@ -469,7 +483,7 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 			accNew();
 		}
 		else if (commandFlag == 2) {	// View account (this conditional doesn't really do anything anymore)
-		//nothing, no user input required
+		//nothing, no user input required at this step
 		}
 		else if (commandFlag == 3) {	// Edit account
 			accEdit();
@@ -478,25 +492,34 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 			accPass();
 		}
 		else if (commandFlag == 5) {	// Delete account (and neither does this one too)
-		//nothing, no user input required
+		//nothing, no user input required at this step
 		}
 		else if (commandFlag == 6) {	// Add new entry into your iSpend tracker
 			iSpendAdd();
 		}
 		else if (commandFlag == 7) {	// View iSpend tracker log (with timestamps)
-		//nothing, no user input required
+		//nothing, no user input required at this step
 		}
 		else if (commandFlag == 8) {	// Display fortune (random from 1-20)
-		//nothing, no user input required
+		//nothing, no user input required at this step
 		}
 		else if (commandFlag == 9) {	// market commodities
-		//nothing, no user input required
+		//nothing, no user input required at this step
 		}
 		else if (commandFlag == 10) {	// equity investment
-			marketMain();
+			marketGeneral();
 		}
-		else if (commandFlag == 13) {
-		
+		else if (commandFlag == 11) {	// transfer to another account
+			etransLog();
+		}
+		else if (commandFlag == 12) {	// add contacts
+			etransNew();
+		}
+		else if (commandFlag == 13) {	// view contacts
+		//nothing, no user input required at this step
+		}
+		else if (commandFlag == 14) {
+		//nothing, no user input required at this step
 		}
 	}
 	else {
@@ -549,7 +572,7 @@ private: System::Void button6_Click_1(System::Object^  sender, System::EventArgs
 	smallSplitter
 	textBox1->AppendText("[trn Send].......Send funds to another account electronically\r\n");
 	textBox1->AppendText("[trn New]........Add a new contact to your directory\r\n");
-	textBox1->AppendText("[trn View].......View a list of all your contacts");
+	textBox1->AppendText("[trn View].......View a list of all your contacts history");
 
 }
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -558,13 +581,15 @@ private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  
 	crlf largeSplitter
 		textBox1->AppendText("BITBank DBA developed and designed by Danny Vuong 101040331, Catherin\
 e Liu 101109688, and Kenny Chan 100761487\r\n");
-	textBox1->AppendText("Questions and Inquiry go to either of my student emails");
+	textBox1->AppendText("Questions and inquiry go to either of my student emails");
 	textBox1->AppendText("CU: DannyVuong@cmail.carleton.ca\r\n");
 	textBox1->AppendText("AC: vuon0023@algonquinlive.com\r\n");
 	textBox1->AppendText("Bitbucket Repo: https://bitbucket.org/Kivoie/bitbank/src/master/ \r\n");
 	textBox1->AppendText("\r\nCARLETON UNIVERSITY COPYRIGHT (c) 2019. ALL RIGHTS RESERVED. NO PART O\
 F THIS FILE OR PROJECT MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT \
 PERMISSION IN WRITING FROM THE UNIVERSITY.");
+	textBox1->AppendText("\r\n\r\nPlease refer to my Wiki page in my Bitbucket reposito\
+ry above for more documentation on the program.");
 }
 };
 }

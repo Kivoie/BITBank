@@ -73,8 +73,26 @@ void mainInterface::mainLoop() {
 		}
 		textBox3->Text = "What equity would you like to invest in?";
 	}
-	else if (textBox2->Text == "help" || textBox2->Text == "Help" || textBox2->Text == "-h") {
+	else if (textBox2->Text == "trn Send" || textBox2->Text == "-ts") {
+		commandFlag = 11;
+		submitRoutine
+		textBox3->Text = "Enter recipient's phone number (Do not include any \"-\")";
+		textBox2->MaxLength = 11;
+		send2Flag = false;
+	}
+	else if (textBox2->Text == "trn New" || textBox2->Text == "-tn") {
+		commandFlag = 12;
+		submitRoutine
+		textBox3->Text = "Enter a new phone number to your contacts";
+		textBox2->MaxLength = 11;
+	}
+	else if (textBox2->Text == "trn View" || textBox2->Text == "-tv") {
 		commandFlag = 13;
+		submitRoutine
+		etransHistory();
+	}
+	else if (textBox2->Text == "help" || textBox2->Text == "Help" || textBox2->Text == "-h") {
+		commandFlag = 14;
 		submitClicked = false;
 		textBox2->Clear();
 		textBox3->Text = "Ready. Type commands in the box below or click a button.";
@@ -83,8 +101,8 @@ void mainInterface::mainLoop() {
 	else {
 		textBox3_ErrorColor();
 		textBox3->Text = "\'" + textBox2->Text + "\' is not a recognized command.";
-		submitClicked = false;
 		textBox2->Clear();
+		submitClicked = false;
 	}
 }
 

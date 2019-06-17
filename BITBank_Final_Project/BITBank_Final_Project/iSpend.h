@@ -14,13 +14,13 @@ void mainInterface::iSpendAdd() {
 	sTm = localtime(&now);
 
 	strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
-	printf("%s %s\n", buff, "new entry");
 
 	String^ iSpendAddEntry = textBox2->Text;
-	fopen_s(&iSpend, "iSpend.txt", "a");
+	fopen_s(&iSpend, "ispend.txt", "a");
 	fprintf(iSpend, "[%s]", buff);
 	fprintf(iSpend, " I spent $%s today!\n", iSpendAddEntry);
 	fclose(iSpend);
+	printf("%s %s\n", buff, "new entry");
 
 	textBox3_OKColor();
 	textBox3->Text = ("Your entry has been added, type 'ispend View' to see it!");
@@ -34,15 +34,15 @@ void mainInterface::iSpendView() {
 
 	StreamReader^ DataIn = File::OpenText("ispend.txt");
 	String^ DataStr;
-	int count = 0;
+	int line_index = 0;
 	textBox1->Clear();
-	while ((DataStr = DataIn->ReadLine()) != nullptr)
+	while ((DataStr = DataIn->ReadLine()) != nullptr)	//While the string is being read (until it hits a null at the EOF) it will continue
 	{
-		count++;
-		textBox1->AppendText(count + " " + DataStr + "\r\n");
+		line_index++;
+		textBox1->AppendText(line_index + " " + DataStr + "\r\n");
 	}
 
-	DataIn->Close();
+	DataIn->Close();	//very important, we need to close the stream after we're done with it!!
 
 	submitClicked = false;
 
