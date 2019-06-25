@@ -12,4 +12,4 @@ Basic Info
 _Please check my documentation if you would like all the information about my source code. Click **Wiki** on the left side._
 
 
-#### **THIS REPOSITORY WILL BECOME PRIVATE STARTING SUNDAY JULY 14th 23:59 EST.**
+#### **THIS REPOSITORY WILL BECOME PRIVATE STARTING SUNDAY JULY 13th 23:59 EST.**
