@@ -1,6 +1,6 @@
 # **BITBank**
 ### BIT2400 - BITBank E-Banking Application
-COPYRIGHT (C) 2020 CARLETON UNIVERSITY. ALL RIGHTS RESERVED. NO PART OF THIS REPOSITORY MAY BE REPRODUCED, IN ANY FORM OR BY ANY OTHER MEANS, WITHOUT PERMISSION IN WRITING FROM THE UNIVERSITY.
+Copyright (C) 2020 Danny Vuong. All rights reserved. No part of this repository may be altered and redistributed, in any form or by any other means, without permission in writing from Danny Vuong.
 
 ## Basic Info
 ==========  
