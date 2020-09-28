@@ -9,3 +9,5 @@ Copyright (C) 2020 Danny Vuong. All rights reserved. No part of this repository 
 **Instructor:** Chris Joslin  
 **Assignment:** Capstone Project  
 _Please check my documentation if you would like all the information about my source code. Click **Wiki** at the top._
+
+![BITBank Desktop Banking Application](https://i.imgur.com/QmNG6EC.png)
